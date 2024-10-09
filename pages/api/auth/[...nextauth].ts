@@ -52,10 +52,10 @@ export default NextAuth({
       return token
     },
     async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id
+      if (token && typeof token.id === 'string') {
+        session.user.id = token.id;
       }
-      return session
+      return session;
     }
   }
 })

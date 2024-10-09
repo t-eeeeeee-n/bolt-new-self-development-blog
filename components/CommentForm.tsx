@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { useToast } from "@/components/ui/use-toast"
+import { useToast } from "@/hooks/use-toast";
 
 export default function CommentForm({ postId }: { postId: number }) {
   const [content, setContent] = useState('')
@@ -13,7 +13,9 @@ export default function CommentForm({ postId }: { postId: number }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!session) {
+
+    // セッションがない場合、エラーメッセージを表示して終了
+    if (!session || !session.user) {
       toast({
         title: "エラー",
         description: "コメントを投稿するにはログインが必要です。",
@@ -23,6 +25,7 @@ export default function CommentForm({ postId }: { postId: number }) {
     }
 
     try {
+      // session.user.id が安全にアクセス可能
       const res = await fetch('/api/comments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -46,14 +49,14 @@ export default function CommentForm({ postId }: { postId: number }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <Textarea
-        placeholder="コメントを入力..."
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        required
-      />
-      <Button type="submit">コメントを投稿</Button>
-    </form>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <Textarea
+            placeholder="コメントを入力..."
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            required
+        />
+        <Button type="submit">コメントを投稿</Button>
+      </form>
   )
 }
