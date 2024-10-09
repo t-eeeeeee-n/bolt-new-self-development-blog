@@ -73,29 +73,11 @@ export function Navbar() {
             <Link href="/" className={linkClassName('/')}>
               ホーム
             </Link>
-            <Link href="/timeline" className={linkClassName('/timeline')}>
-              タイムライン
+            <Link href="/about" className={linkClassName('/timeline')}>
+              About
             </Link>
             <Link href="/trend" className={linkClassName('/trend')}>
               トレンド
-            </Link>
-            <Link href="/conference" className={linkClassName('/conference')}>
-              Qiita Conference
-            </Link>
-            <Link href="/questions" className={linkClassName('/questions')}>
-              質問
-            </Link>
-            <Link href="/events" className={linkClassName('/events')}>
-              公式イベント
-            </Link>
-            <Link href="/columns" className={linkClassName('/columns')}>
-              公式コラム
-            </Link>
-            <Link href="/findy" className={linkClassName('/findy')}>
-              Findyコンテンツ
-            </Link>
-            <Link href="/organization" className={linkClassName('/organization')}>
-              Organization
             </Link>
           </div>
         </div>
