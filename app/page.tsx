@@ -2,11 +2,12 @@ import React from 'react';
 import { getPosts, getRecommendedPosts } from '@/lib/api';
 import Client from "@/app/client"; // データ取得関数を別ファイルにまとめて読み込み
 
-export default async function Home({ searchParams }: { searchParams: { page: string } }) {
+export default async function Home({ searchParams }: { searchParams: { page: string, q?: string } }) {
     const page = parseInt(searchParams.page || '1');
+    const searchQuery = searchParams.q || '';  // 検索クエリが存在しない場合は空文字列
 
-    // トレンド記事の取得
-    const { posts, totalPages, currentPage } = await getPosts(page);
+    // トレンド記事の取得 (検索クエリがある場合、それを使用して記事を取得)
+    const { posts, totalPages, currentPage } = await getPosts(page, searchQuery);
 
     // おすすめ記事の取得
     const recommendedPosts = await getRecommendedPosts();

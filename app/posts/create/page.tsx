@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, X } from 'lucide-react';  // アイコンを使ってデザインを改善
+import { useRouter } from 'next/navigation'; // useRouterをインポート
 
 export default function CreatePost() {
     const [title, setTitle] = useState('');
@@ -12,6 +13,7 @@ export default function CreatePost() {
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
     const [tags, setTags] = useState<string[]>(['']); // タグの入力欄を増やす
+    const router = useRouter(); // useRouterを初期化
 
     // タグの入力欄を追加
     const handleAddTagField = () => {
@@ -34,8 +36,40 @@ export default function CreatePost() {
     // フォームの送信処理
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // フォーム送信の処理をここに記述
-        console.log({ title, excerpt, content, category, tags });
+
+        // フォームの内容をオブジェクトにまとめる
+        const postData = {
+            title,
+            excerpt,
+            content,
+            category,
+            tags: tags.join(','), // タグを配列として送信
+            authorId: 1 // 固定で1を使用していますが、実際にはログインユーザーのIDなどを設定するべきです
+        };
+
+        try {
+            // APIエンドポイントにPOSTリクエストを送信
+            const res = await fetch('/api/posts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(postData)
+            });
+
+            // レスポンスの確認
+            if (!res.ok) {
+                throw new Error('記事の投稿に失敗しました');
+            }
+
+            const data = await res.json();
+            console.log('記事が投稿されました:', data);
+
+            // 投稿成功後、リダイレクト処理
+            router.push('/search'); // 投稿後に検索ページなどにリダイレクト
+        } catch (error) {
+            console.error('記事の投稿エラー:', error);
+        }
     };
 
     return (
@@ -57,7 +91,7 @@ export default function CreatePost() {
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
                                 <label htmlFor="title" className="block font-semibold">タイトル</label>
-                                <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} required/>
+                                <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} required />
                             </div>
 
                             <div>
@@ -87,8 +121,7 @@ export default function CreatePost() {
 
                             <div>
                                 <label htmlFor="category" className="block font-semibold">カテゴリー</label>
-                                <Input id="category" value={category} onChange={(e) => setCategory(e.target.value)}
-                                       required/>
+                                <Input id="category" value={category} onChange={(e) => setCategory(e.target.value)} required />
                             </div>
 
                             {/* タグ入力部分 */}
@@ -110,7 +143,7 @@ export default function CreatePost() {
                                                     className="p-1 text-gray-500 hover:text-red-500"
                                                     onClick={() => handleRemoveTagField(index)}
                                                 >
-                                                    <X size={16}/>
+                                                    <X size={16} />
                                                 </Button>
                                             )}
                                         </div>
@@ -122,7 +155,7 @@ export default function CreatePost() {
                                     className="mt-2 flex items-center text-blue-500 hover:text-blue-600"
                                     onClick={handleAddTagField}
                                 >
-                                    <Plus className="mr-1" size={18}/>
+                                    <Plus className="mr-1" size={18} />
                                     タグを追加
                                 </Button>
                             </div>
