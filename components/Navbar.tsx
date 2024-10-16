@@ -74,6 +74,9 @@ export function Navbar() {
             <Link href="/about" className={linkClassName('/timeline')}>
               About
             </Link>
+            <Link href="/search" className={linkClassName('/search')}>
+              一覧
+            </Link>
           </div>
         </div>
       </nav>
