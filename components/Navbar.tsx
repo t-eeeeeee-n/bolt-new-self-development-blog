@@ -24,7 +24,7 @@ export function Navbar() {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center h-16">
             {/* ロゴ部分 */}
-            <Link href="/" className="text-2xl font-bold">
+            <Link href="/" className="text-md md:text-2xl font-bold">
               自己啓発ブログ
             </Link>
 
@@ -36,13 +36,14 @@ export function Navbar() {
                   <Input type="search" name="q" placeholder="記事を検索..." className="pl-8 w-64" />
                 </div>
               </form>
-
+              <Button className={"bg-black "}>ログイン</Button>
               {/* テーマトグル */}
               <ModeToggle />
             </div>
 
             {/* モバイル用ハンバーガーメニュー */}
             <div className="md:hidden flex items-center">
+              <Button className={"bg-black"}>ログイン</Button>
               <ModeToggle />
               <Popover>
                 <PopoverTrigger asChild>
@@ -59,9 +60,6 @@ export function Navbar() {
                     <Link href="/about" className={linkClassName('/timeline')}>
                       About
                     </Link>
-                    <Link href="/trend" className={linkClassName('/trend')}>
-                      トレンド
-                    </Link>
                   </div>
                 </PopoverContent>
               </Popover>
@@ -75,9 +73,6 @@ export function Navbar() {
             </Link>
             <Link href="/about" className={linkClassName('/timeline')}>
               About
-            </Link>
-            <Link href="/trend" className={linkClassName('/trend')}>
-              トレンド
             </Link>
           </div>
         </div>
