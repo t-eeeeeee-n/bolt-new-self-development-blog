@@ -3,7 +3,7 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/compo
 import {Badge} from "@/components/ui/badge";
 import {Separator} from "@/components/ui/separator";
 import {getServerSession} from "next-auth";
-import {authOptions} from '@/app/api/auth/[...nextauth]/route';
+import {authOptions} from '@/app/api/auth/[...nextauth]/authOptions';
 import Client from "@/app/posts/[id]/client";
 import React from "react";
 

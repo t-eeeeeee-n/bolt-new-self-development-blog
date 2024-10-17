@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'; // next-auth の設定が定義されたファイルを参照
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'; // next-auth の設定が定義されたファイルを参照
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
