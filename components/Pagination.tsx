@@ -11,7 +11,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
   return (
       <div className="flex justify-center space-x-2 mt-8">
         {currentPage > 1 && (
-            <Button onClick={() => onPageChange(currentPage - 1)}>
+            <Button onClick={() => onPageChange(currentPage - 1)} className={"text-white"}>
               前へ
             </Button>
         )}
@@ -20,12 +20,13 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
                 key={page}
                 variant={page === currentPage ? 'default' : 'outline'}
                 onClick={() => onPageChange(page)}
+                className={page === currentPage ? "text-white": "text-black dark:text-white"}
             >
               {page}
             </Button>
         ))}
         {currentPage < totalPages && (
-            <Button onClick={() => onPageChange(currentPage + 1)}>
+            <Button onClick={() => onPageChange(currentPage + 1)} className={"text-white"}>
               次へ
             </Button>
         )}

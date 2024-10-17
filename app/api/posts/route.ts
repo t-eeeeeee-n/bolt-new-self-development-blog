@@ -3,11 +3,11 @@ import prisma from '@/lib/prisma'
 
 export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(request.url)
-    const page = parseInt(searchParams.get('page') || '1')
-    const limit = parseInt(searchParams.get('limit') || '10')
-    const skip = (page - 1) * limit
-    const search = searchParams.get('search') || '' // 検索クエリ
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get('page') || '1', 10);
+    const limit = parseInt(searchParams.get('limit') || '10', 10);
+    const skip = (page - 1) * limit;
+    const search = searchParams.get('search') || ''; // 検索クエリ
 
     // 検索クエリに基づいてフィルタリング
     const posts = await prisma.post.findMany({
@@ -16,37 +16,40 @@ export async function GET(request: Request) {
       where: {
         title: {
           contains: search,
-          // SQLiteではmodeがサポートされていないため削除する
-        }
+        },
       },
       include: {
         author: {
-          select: { name: true }
-        }
+          select: { name: true },
+        },
       },
       orderBy: {
-        createdAt: 'desc'
-      }
-    })
+        createdAt: 'desc',
+      },
+    });
 
-    const total = await prisma.post.count({
+    // 検索条件に基づいた総投稿数を取得
+    const totalPosts = await prisma.post.count({
       where: {
         title: {
           contains: search,
-          // SQLiteではmodeがサポートされていないため削除する
-        }
-      }
-    })
+        },
+      },
+    });
+
+    // 総ページ数を計算
+    const totalPages = Math.ceil(totalPosts / limit);
 
     return NextResponse.json({
       posts,
-      totalPages: Math.ceil(total / limit),
-      currentPage: page
-    })
+      totalPages,
+      totalPosts,
+      currentPage: page,
+    });
 
   } catch (error) {
-    console.error('Error fetching posts:', error)
-    return NextResponse.json({ error: 'Error fetching posts' }, { status: 500 })
+    console.error('Error fetching posts:', error);
+    return NextResponse.json({ error: 'Error fetching posts' }, { status: 500 });
   }
 }
 

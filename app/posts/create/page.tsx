@@ -76,8 +76,8 @@ export default function CreatePost() {
         <div className="container mx-auto px-4 py-8 grid grid-cols-12 gap-4">
             {/* 左側の広告スペース */}
             <div className="col-span-3 hidden lg:block">
-                <div className="bg-gray-200 h-full w-full flex items-center justify-center">
-                    <p>広告スペース</p>
+                <div className="h-full w-full flex items-center justify-center">
+                    {/*<p>広告スペース</p>*/}
                 </div>
             </div>
 
@@ -160,7 +160,7 @@ export default function CreatePost() {
                                 </Button>
                             </div>
 
-                            <Button type="submit" className="w-full mt-4" variant="default">
+                            <Button type="submit" className="w-full mt-4 text-white" variant="default">
                                 投稿する
                             </Button>
                         </form>
@@ -170,8 +170,8 @@ export default function CreatePost() {
 
             {/* 右側の広告スペース */}
             <div className="col-span-3 hidden lg:block">
-                <div className="bg-gray-200 h-full w-full flex items-center justify-center">
-                    <p>広告スペース</p>
+                <div className="h-full w-full flex items-center justify-center">
+                    {/*<p>広告スペース</p>*/}
                 </div>
             </div>
         </div>

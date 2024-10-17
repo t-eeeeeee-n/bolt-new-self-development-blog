@@ -2,6 +2,14 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
+    // ユーザーを作成
+    const user = await prisma.user.create({
+        data: {
+            email: "test@test.com",
+            name: "testUser",
+            password: "password123", // 実際のアプリではハッシュ化されたパスワードを使用
+        },
+    });
 
     // 複数のポストを作成
     await prisma.post.createMany({
@@ -12,7 +20,7 @@ async function main() {
                 excerpt: "成功は習慣から始まる...",
                 category: "自己啓発",
                 tags: "習慣, 成功, 自己改善",
-                authorId: 1,
+                authorId: user.id,
                 createdAt: new Date('2024-03-01'),
             },
             {
@@ -21,7 +29,7 @@ async function main() {
                 excerpt: "目標を設定し、成功を手に入れるためのステップ...",
                 category: "自己啓発",
                 tags: "目標設定, 自己啓発, 人生設計",
-                authorId: 1,
+                authorId: user.id,
                 createdAt: new Date('2024-05-01'),
             },
             {
@@ -30,7 +38,7 @@ async function main() {
                 excerpt: "時間を効率的に使い、生産性を高める...",
                 category: "自己啓発",
                 tags: "時間管理, 生産性, 効率化",
-                authorId: 1,
+                authorId: user.id,
                 createdAt: new Date('2024-06-01'),
             },
             {
@@ -39,7 +47,7 @@ async function main() {
                 excerpt: "失敗を恐れず、学びに変える方法...",
                 category: "自己啓発",
                 tags: "失敗, マインドセット, 成長",
-                authorId: 1,
+                authorId: user.id,
                 createdAt: new Date('2024-07-01'),
             },
             {
@@ -48,7 +56,7 @@ async function main() {
                 excerpt: "自信を持つための具体的な方法...",
                 category: "自己啓発",
                 tags: "自信, メンタル, 自己成長",
-                authorId: 1,
+                authorId: user.id,
                 createdAt: new Date('2024-08-01'),
             },
             {
@@ -57,7 +65,7 @@ async function main() {
                 excerpt: "心の健康を保つためのストレス管理術...",
                 category: "自己啓発",
                 tags: "ストレス, メンタルヘルス, 健康",
-                authorId: 1,
+                authorId: user.id,
                 createdAt: new Date('2024-09-01'),
             },
             {
@@ -66,7 +74,7 @@ async function main() {
                 excerpt: "ポジティブな思考で人生をより良く...",
                 category: "自己啓発",
                 tags: "ポジティブ思考, 幸福, 自己成長",
-                authorId: 1,
+                authorId: user.id,
                 createdAt: new Date('2024-10-01'),
             },
             {
@@ -75,7 +83,7 @@ async function main() {
                 excerpt: "人間関係を向上させるコミュニケーションのコツ...",
                 category: "自己啓発",
                 tags: "コミュニケーション, 人間関係, 自己改善",
-                authorId: 1,
+                authorId: user.id,
                 createdAt: new Date('2024-11-01'),
             },
         ],
