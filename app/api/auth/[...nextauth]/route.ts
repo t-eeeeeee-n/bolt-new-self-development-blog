@@ -1,12 +1,11 @@
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-// NextAuthの設定オブジェクトを定義
-export const authOptions: AuthOptions = {
+const handler = NextAuth({
     providers: [
         CredentialsProvider({
             name: "Credentials",
@@ -68,10 +67,7 @@ export const authOptions: AuthOptions = {
         }
     },
     secret: process.env.NEXTAUTH_SECRET,
-};
+});
 
-// NextAuthハンドラーを設定オブジェクトとともに使用
-const handler = NextAuth(authOptions);
-
-// GETとPOSTの両方をエクスポートしてエンドポイントが正しく動作するようにする
+// handlerをGETとPOSTのエクスポートとして設定
 export { handler as GET, handler as POST };
